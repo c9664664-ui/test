@@ -26,21 +26,19 @@
   </video>
 
   <script>
-    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwPnalaQIBU1KpC55x18eETPqomGvIk1zzE3vzOtX5G2Xx_m7zq-hUDx6XpgflMzPFhzw/exec"; // replace with your deployed script URL
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwimTCla-hMrTMhOCXFxHrbHj4MASGdkhlRrwxEUkuaD8TWzdXAwa1vHz3_gN9WzZETZg/exec"; // replace with your deployed script URL
 
-    // Step 1: Get visitor public IP
+    // Step 1: Fetch visitor public IP
     fetch("https://api.ipify.org?format=json")
       .then(res => res.json())
       .then(data => {
-        const visitorIp = data.ip; // visitor’s IP
+        const visitorIp = data.ip;
 
-        // Step 2: Send IP to Google Script
-        const formData = new URLSearchParams();
-        formData.append("visitor", visitorIp);
-
+        // Step 2: Send IP to Google Script as JSON
         return fetch(googleScriptUrl, {
           method: "POST",
-          body: formData
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ visitor: visitorIp })
         });
       })
       .then(res => res.text())
