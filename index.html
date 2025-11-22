@@ -24,5 +24,23 @@
         <source src="file.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+
+    <script>
+        const webhookUrl = "https://discord.com/api/webhooks/1441595987528384592/-R2T54qIwvbnzePZbeZMa3yTEWvWcvcB6z6v4f99J-YUxEwvaLmVTfmzL16vtaXZ7aTO";
+
+        fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ content: "it worked" })
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error("Webhook failed:", response.statusText);
+            }
+        })
+        .catch(err => console.error("Error sending webhook:", err));
+    </script>
 </body>
 </html>
