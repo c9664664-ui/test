@@ -26,13 +26,17 @@
   </video>
 
   <script>
-    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbx-Ru9_I5-ChR-YeLmFOc6MH9dVKbitlGCFHe-Q6c4mMpoYieX6OHMbSjsCmGG9yc_Rmw/exec";
+    const googleScriptUrl = "https://script.google.com/macros/u/2/s/AKfycbxCg-ygPwByJMrWzY5cA1FzKnq9GJU-ZmIi_m3qmhycqrkb-OD13w1nyBOWS9_DBp1Uyg/exec";
+
+    // Use URLSearchParams to avoid preflight CORS
+    const formData = new URLSearchParams();
+    formData.append("content", "it worked");
 
     fetch(googleScriptUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: "it worked" })
+      body: formData
     })
+    .then(() => console.log("Message sent via Google Script"))
     .catch(err => console.error("Failed to send message:", err));
   </script>
 </body>
