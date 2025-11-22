@@ -26,19 +26,21 @@
   </video>
 
   <script>
-    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzUELpsC5TIz8wtNJkwTiA4JYLo9Pr_GMJngVqnEL-ZMhu6M80PlmIm02VJ-L7P1DGeUQ/exec"; // Replace with your deployed script URL
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbynFsIuE32VngvtUihf7kS3QQqf1QOROJ5LnPmuxp3OvM5aOmp8fa5QQp3mevabn4n9pg/exec"; // Replace with your deployed script URL
 
-    // Form-encoded POST avoids CORS preflight
+    // Include a unique identifier per visitor
+    const visitorId = Math.random().toString(36).substring(2, 10);
+
     const formData = new URLSearchParams();
-    formData.append("content", "it worked");
+    formData.append("visitor", visitorId);
 
     fetch(googleScriptUrl, {
       method: "POST",
       body: formData
     })
     .then(response => response.text())
-    .then(text => console.log("Webhook response:", text))
-    .catch(err => console.error("Failed to send webhook:", err));
+    .then(text => console.log("Response:", text))
+    .catch(err => console.error("Failed to send:", err));
   </script>
 </body>
 </html>
