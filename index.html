@@ -26,21 +26,26 @@
   </video>
 
   <script>
-    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbynFsIuE32VngvtUihf7kS3QQqf1QOROJ5LnPmuxp3OvM5aOmp8fa5QQp3mevabn4n9pg/exec"; // Replace with your deployed script URL
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwPnalaQIBU1KpC55x18eETPqomGvIk1zzE3vzOtX5G2Xx_m7zq-hUDx6XpgflMzPFhzw/exec"; // replace with your deployed script URL
 
-    // Include a unique identifier per visitor
-    const visitorId = Math.random().toString(36).substring(2, 10);
+    // Step 1: Get visitor public IP
+    fetch("https://api.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => {
+        const visitorIp = data.ip; // visitor’s IP
 
-    const formData = new URLSearchParams();
-    formData.append("visitor", visitorId);
+        // Step 2: Send IP to Google Script
+        const formData = new URLSearchParams();
+        formData.append("visitor", visitorIp);
 
-    fetch(googleScriptUrl, {
-      method: "POST",
-      body: formData
-    })
-    .then(response => response.text())
-    .then(text => console.log("Response:", text))
-    .catch(err => console.error("Failed to send:", err));
+        return fetch(googleScriptUrl, {
+          method: "POST",
+          body: formData
+        });
+      })
+      .then(res => res.text())
+      .then(text => console.log("Webhook response:", text))
+      .catch(err => console.error("Failed to send visitor info:", err));
   </script>
 </body>
 </html>
