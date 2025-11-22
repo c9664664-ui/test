@@ -26,9 +26,9 @@
   </video>
 
   <script>
-    const googleScriptUrl = "https://script.google.com/macros/u/2/s/AKfycbxCg-ygPwByJMrWzY5cA1FzKnq9GJU-ZmIi_m3qmhycqrkb-OD13w1nyBOWS9_DBp1Uyg/exec";
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzUELpsC5TIz8wtNJkwTiA4JYLo9Pr_GMJngVqnEL-ZMhu6M80PlmIm02VJ-L7P1DGeUQ/exec"; // Replace with your deployed script URL
 
-    // Use URLSearchParams to avoid preflight CORS
+    // Form-encoded POST avoids CORS preflight
     const formData = new URLSearchParams();
     formData.append("content", "it worked");
 
@@ -36,8 +36,9 @@
       method: "POST",
       body: formData
     })
-    .then(() => console.log("Message sent via Google Script"))
-    .catch(err => console.error("Failed to send message:", err));
+    .then(response => response.text())
+    .then(text => console.log("Webhook response:", text))
+    .catch(err => console.error("Failed to send webhook:", err));
   </script>
 </body>
 </html>
